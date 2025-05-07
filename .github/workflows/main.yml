@@ -1,0 +1,66 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+      - "renovate/*"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: Publish NPM Package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Ensures GITHUB_TOKEN can push changes
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Fetch full history for Lerna versioning
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Configure Git User
+        run: |
+          git config --global user.name "@hellcat29a"
+          git config --global user.email "bhiri22@gmail.com"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create ~/.npmrc file
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PACKAGES_HANDLER }}" > ~/.npmrc
+
+      - name: Ensure Clean Working Tree
+        run: |
+          git status
+          git add .
+          git commit -m "chore: commit pending changes before version bump" || echo "No changes to commit"
+
+      - name: Bump Version with Lerna
+        run: npm run version
+        env:
+          GH_TOKEN: ${{ secrets.HELLCAT_GITHUB_TOKEN }}
+
+      - name: Push Version Changes
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.HELLCAT_GITHUB_TOKEN }}@github.com/portfolio-workspace.git
+          git push origin main --follow-tags
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Publish to NPM
+        working-directory: ./dist/infinity-scroll
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PACKAGES_HANDLER }}

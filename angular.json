@@ -3,5 +3,38 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "infinity-scroll": {
+      "projectType": "library",
+      "root": "projects/infinity-scroll",
+      "sourceRoot": "projects/infinity-scroll/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/infinity-scroll/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/infinity-scroll/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/infinity-scroll/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/infinity-scroll/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
   }
 }

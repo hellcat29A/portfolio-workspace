@@ -6,6 +6,11 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
+    "paths": {
+      "infinity-scroll": [
+        "./dist/infinity-scroll"
+      ]
+    },
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

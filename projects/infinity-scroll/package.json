@@ -1,0 +1,17 @@
+{
+  "name": "@hellcat29a/infinity-scroll",
+  "version": "0.0.1",
+  "private": false,
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
