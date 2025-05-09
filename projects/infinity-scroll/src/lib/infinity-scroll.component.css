@@ -36,23 +36,3 @@
 .track li {
   margin: 0 2rem; /* mx-8 = 2rem each side */
 }
-
-.track img {
-  max-width: none;
-  will-change: transform;
-}
-
-.tech-logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 86px;
-  width: 86px;
-  background-color: #121212;
-  border-radius: 36px;
-}
-
-.tech-logo {
-  width: 2.5rem; /* w-10 */
-  height: 2.5rem; /* h-10 */
-}
