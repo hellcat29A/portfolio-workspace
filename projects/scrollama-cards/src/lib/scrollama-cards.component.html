@@ -1,0 +1,13 @@
+<section class="section-wrapper" #containerRef>
+  <div
+    *ngFor="let item of items; let i = index"
+    class="card-item"
+    [style.top.px]="getTopPosition(i)"
+    [style.transform]="cardTransforms[i]"
+    #cardElems
+  >
+    <ng-container
+      *ngTemplateOutlet="cardTemplate; context: { $implicit: item, index: i }"
+    ></ng-container>
+  </div>
+</section>

@@ -9,6 +9,9 @@
     "paths": {
       "infinity-scroll": [
         "./dist/infinity-scroll"
+      ],
+      "scrollama-cards": [
+        "./dist/scrollama-cards"
       ]
     },
     "noPropertyAccessFromIndexSignature": true,

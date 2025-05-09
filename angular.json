@@ -35,6 +35,39 @@
           }
         }
       }
+    },
+    "scrollama-cards": {
+      "projectType": "library",
+      "root": "projects/scrollama-cards",
+      "sourceRoot": "projects/scrollama-cards/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/scrollama-cards/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/scrollama-cards/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/scrollama-cards/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/scrollama-cards/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   }
 }

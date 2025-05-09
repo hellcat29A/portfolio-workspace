@@ -11,16 +11,16 @@ on:
 
 jobs:
   publish:
-    name: Publish NPM Package
+    name: Publish NPM Packages
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Ensures GITHUB_TOKEN can push changes
+      contents: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # Fetch full history for Lerna versioning
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -56,11 +56,18 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.HELLCAT_GITHUB_TOKEN }}@github.com/hellcat29A/portfolio-workspace.git
           git push origin main --follow-tags
 
-      - name: Build Project
-        run: npm run build
+      - name: Build All Libraries
+        run: |
+          npm run build:libs # or replace with: ng build infinity-scroll && ng build scrollama-cards
 
-      - name: Publish to NPM
+      - name: Publish Infinity Scroll
         working-directory: ./dist/infinity-scroll
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PACKAGES_HANDLER }}
+
+      - name: Publish Scrollama Cards
+        working-directory: ./dist/scrollama-cards
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PACKAGES_HANDLER }}

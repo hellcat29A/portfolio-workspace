@@ -1,0 +1,13 @@
+.section-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+}
+.card-item {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition: transform 700ms ease-out;
+}
