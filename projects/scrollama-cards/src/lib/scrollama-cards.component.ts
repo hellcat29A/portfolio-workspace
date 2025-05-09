@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -17,7 +17,7 @@ import {
   selector: 'sofia-ui-scrollama-cards',
   templateUrl: './scrollama-cards.component.html',
   styleUrl: './scrollama-cards.component.css',
-  imports: [NgFor],
+  imports: [NgFor, NgTemplateOutlet],
 })
 export class ScrollamaCardsComponent {
   @Input() items: any[] = [];
