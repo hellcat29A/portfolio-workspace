@@ -3,4 +3,4 @@
  */
 
 // export * from './lib/infinity-scroll.component';
-export { InfinityScrollComponent as NgxInfinityScrollModule } from './lib/infinity-scroll.component';
+export { InfinityScrollComponent as InfinityModule } from './lib/infinity-scroll.component';

@@ -1,14 +1,14 @@
-<div class="carousel" #carousel>
-  <ul class="track" #track>
-    <li *ngFor="let item of technologies">
-      <div class="tech-logo-container">
-        <img [src]="item.logo" alt="" class="tech-logo" />
-      </div>
+<div #carousel class="carousel">
+  <ul #track [class]="trackClass || 'track'">
+    <li *ngFor="let item of items">
+      <ng-container
+        *ngTemplateOutlet="cardTemplate; context: { $implicit: item }"
+      ></ng-container>
     </li>
-    <li *ngFor="let item of technologies">
-      <div class="tech-logo-container">
-        <img [src]="item.logo" alt="" class="tech-logo" />
-      </div>
+    <li *ngFor="let item of items">
+      <ng-container
+        *ngTemplateOutlet="cardTemplate; context: { $implicit: item }"
+      ></ng-container>
     </li>
   </ul>
 </div>

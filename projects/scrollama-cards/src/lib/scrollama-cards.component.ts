@@ -26,7 +26,6 @@ export class ScrollamaCardsComponent {
   @Input() topOffset = 10;
 
   @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
-
   @ViewChildren('cardElems') cardElems!: QueryList<ElementRef>;
   @ViewChild('containerRef') containerRef!: ElementRef;
 
