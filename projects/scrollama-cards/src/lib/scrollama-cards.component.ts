@@ -21,7 +21,6 @@ import {
 })
 export class ScrollamaCardsComponent {
   @Input() items: any[] = [];
-  // @Input() baseTop = 215;
   @Input() baseTop: { phone: number; tablet: number; desktop: number } = {
     phone: 120,
     tablet: 180,
