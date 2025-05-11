@@ -1,9 +1,5 @@
 <div #carousel class="carousel">
-  <ul
-    #track
-    [class]="config.trackClass || 'track'"
-    [style.flexDirection]="config?.rtl ? 'row-reverse' : 'row'"
-  >
+  <ul #track [class]="trackClass || 'track'">
     <li *ngFor="let item of items">
       <ng-container
         *ngTemplateOutlet="cardTemplate; context: { $implicit: item }"
