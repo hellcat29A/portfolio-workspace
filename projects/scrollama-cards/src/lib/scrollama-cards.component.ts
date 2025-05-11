@@ -21,7 +21,7 @@ import {
 })
 export class ScrollamaCardsComponent {
   @Input() items: any[] = [];
-  @Input() baseTop = 215;
+  private baseTop: number = 0; // not exposed
   @Input() topStep = 30;
   @Input() topOffset = 10;
 
@@ -40,6 +40,9 @@ export class ScrollamaCardsComponent {
     this.ngZone.runOutsideAngular(() => {
       requestAnimationFrame(() => {
         this.ngZone.run(() => {
+          const viewportHeight = window.innerHeight;
+          this.baseTop = Math.floor(viewportHeight / 2.2);
+
           this.cardTransforms = this.items.map(
             () => 'perspective(1200px) scale(1)'
           );
