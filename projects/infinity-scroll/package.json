@@ -1,6 +1,6 @@
 {
   "name": "@hellcat29a/infinity-scroll",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "private": false,
   "publishConfig": {
     "access": "restricted",
