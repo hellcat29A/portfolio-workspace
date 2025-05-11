@@ -75,7 +75,7 @@ nav {
     display: block;
   }
   .hamburger-btn {
-    display: none;
+    display: none !important;
   }
 }
 
