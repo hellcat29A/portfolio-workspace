@@ -32,4 +32,12 @@ export class FlyoutNavbarComponent {
   onWindowScroll() {
     this.isSticky = window.scrollY > this.stickyOffset;
   }
+  scrollTo(selector: string) {
+    const id = selector.replace('#', '');
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      this.menuOpen = false; // optional: close mobile menu after click
+    }
+  }
 }

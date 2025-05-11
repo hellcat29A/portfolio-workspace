@@ -26,7 +26,7 @@
       [ngStyle]="{ '--desktop-items-translate': itemsTranslateX }"
     >
       <div *ngFor="let navItem of navbarItems" class="nav-item">
-        <button [routerLink]="navItem.path" class="nav-btn">
+        <button (click)="scrollTo(navItem.path)" class="nav-btn">
           {{ navItem.name }}
         </button>
       </div>
