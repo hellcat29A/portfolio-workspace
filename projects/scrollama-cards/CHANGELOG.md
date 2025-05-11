@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/hellcat29A/portfolio-workspace/compare/@hellcat29a/scrollama-cards@0.0.7...@hellcat29a/scrollama-cards@0.0.8) (2025-05-11)
+
+**Note:** Version bump only for package @hellcat29a/scrollama-cards
+
+
+
+
+
 ## [0.0.7](https://github.com/hellcat29A/portfolio-workspace/compare/@hellcat29a/scrollama-cards@0.0.6...@hellcat29a/scrollama-cards@0.0.7) (2025-05-11)
 
 **Note:** Version bump only for package @hellcat29a/scrollama-cards
