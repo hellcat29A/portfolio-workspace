@@ -7,8 +7,9 @@
   <!-- Content -->
   <div class="nav-content">
     <div
-      [ngClass]="isSticky ? 'logo-shifted' : 'logo-unshifted'"
       class="logo-container"
+      [class.sticky]="isSticky"
+      [ngStyle]="{ '--desktop-logo-translate': logoTranslateX }"
     >
       <a routerLink="/" class="logo">
         <img
@@ -20,8 +21,9 @@
     </div>
 
     <div
-      [ngClass]="isSticky ? 'nav-shifted' : 'nav-unshifted'"
       class="nav-items-container"
+      [class.sticky]="isSticky"
+      [ngStyle]="{ '--desktop-items-translate': itemsTranslateX }"
     >
       <div *ngFor="let navItem of navbarItems" class="nav-item">
         <button [routerLink]="navItem.path" class="nav-btn">

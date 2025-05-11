@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'sofia-ui-flyout-navbar',
-  imports: [NgIf, NgClass, RouterModule, NgFor],
+  imports: [NgIf, NgClass, RouterModule, NgFor, NgStyle],
   templateUrl: './flyout-navbar.component.html',
   styleUrl: './flyout-navbar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +18,8 @@ export class FlyoutNavbarComponent {
   @Input() navbarItems: { name: string; path: string }[] = [];
   @Input() logoUrl: string = 'default-logo-path';
   @Input() stickyOffset = 50;
+  @Input() logoTranslateX = '15.4rem';
+  @Input() itemsTranslateX = '-89%';
 
   isSticky = false;
   menuOpen = false;
