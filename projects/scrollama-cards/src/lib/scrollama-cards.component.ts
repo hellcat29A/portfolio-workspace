@@ -21,7 +21,13 @@ import {
 })
 export class ScrollamaCardsComponent {
   @Input() items: any[] = [];
-  private baseTop: number = 0; // not exposed
+  // @Input() baseTop = 215;
+  @Input() baseTop: { phone: number; tablet: number; desktop: number } = {
+    phone: 120,
+    tablet: 180,
+    desktop: 215,
+  };
+
   @Input() topStep = 30;
   @Input() topOffset = 10;
 
@@ -40,9 +46,6 @@ export class ScrollamaCardsComponent {
     this.ngZone.runOutsideAngular(() => {
       requestAnimationFrame(() => {
         this.ngZone.run(() => {
-          const viewportHeight = window.innerHeight;
-          this.baseTop = Math.floor(viewportHeight / 2.2);
-
           this.cardTransforms = this.items.map(
             () => 'perspective(1200px) scale(1)'
           );
@@ -54,9 +57,17 @@ export class ScrollamaCardsComponent {
   }
 
   getTopPosition(i: number): number {
+    const responsiveBaseTop = this.getResponsiveBaseTop();
     return (
-      this.baseTop + i * this.topStep + Math.max(0, i - 1) * this.topOffset
+      responsiveBaseTop + i * this.topStep + Math.max(0, i - 1) * this.topOffset
     );
+  }
+
+  private getResponsiveBaseTop(): number {
+    const width = window.innerWidth;
+    if (width < 640) return this.baseTop.phone; // Tailwind: < sm
+    if (width < 1024) return this.baseTop.tablet; // Tailwind: < lg
+    return this.baseTop.desktop; // >= lg
   }
 
   @HostListener('window:scroll', [])
