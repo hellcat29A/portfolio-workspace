@@ -1,4 +1,4 @@
-import { NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,109 +8,52 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { InfinityScrollConfig } from './infinity-scoll.model';
 
 @Component({
   selector: 'ngx-infinity-scroll',
+  standalone: true,
   imports: [NgFor, NgTemplateOutlet],
   templateUrl: './infinity-scroll.component.html',
-  styleUrl: './infinity-scroll.component.css',
+  styleUrls: ['./infinity-scroll.component.css'],
   host: {
     class: 'w-full overflow-hidden',
   },
 })
 export class InfinityScrollComponent implements AfterViewInit {
-  @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
-  // technologies = [
-  //   {
-  //     logo: 'images/angular-logo.svg',
-  //     name: 'Alsico',
-  //     websiteLink: 'https://www.alsico.com/eu-fr/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/nestjs-logo.svg',
-  //     name: 'Granjard',
-  //     websiteLink: 'https://granjard.fr/',
-
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/react-logo.svg',
-  //     name: 'Aubade',
-  //     websiteLink:
-  //       'https://www.aubade.fr/?srsltid=AfmBOopPKNU0AAlQa5VLOp9bftL_Lq5S5DHK7TjAmFDhRVtrsV7-XwCd',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/nextjs-logo.svg',
-  //     name: 'Bleu Oceane',
-  //     websiteLink: 'https://www.bleu-oceane.com/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/tailwind-logo.svg',
-  //     name: 'NAFNAF',
-  //     websiteLink: 'https://www.nafnaf.com/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/python-logo.svg',
-  //     name: 'NAFNAF',
-  //     websiteLink: 'https://www.nafnaf.com/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/docker-logo.svg',
-  //     name: 'NAFNAF',
-  //     websiteLink: 'https://www.nafnaf.com/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/mysql-logo.svg',
-  //     name: 'NAFNAF',
-  //     websiteLink: 'https://www.nafnaf.com/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  //   {
-  //     logo: 'images/wordpress-logo.svg',
-  //     name: 'NAFNAF',
-  //     websiteLink: 'https://www.nafnaf.com/',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam atque laborum iure commodi, veritatis vitae perspiciatis reprehenderit ea facilis qui temporibus, perferendis voluptatibus. Aliquam omnis minima temporibus veniam tempore saepe.',
-  //   },
-  // ];
-
   @Input() items: any[] = [];
-  @Input() speed = 60; // pixels per second
-  @Input() slowSpeed = 20;
-  @Input() pauseOnHover = true;
-  @Input() trackClass = ''; // allow override of track styling
-  @Input() wrapperClass = ''; // allow override of ul wrapper styling
+  @Input() config: InfinityScrollConfig = {};
+
+  @ContentChild(TemplateRef) cardTemplate!: TemplateRef<any>;
   @ViewChild('carousel', { static: true })
   carouselRef!: ElementRef<HTMLDivElement>;
   @ViewChild('track', { static: true }) trackRef!: ElementRef<HTMLUListElement>;
+
   private startTime = Date.now();
-  private readonly normalSpeed = 60;
-  private currentSpeed = this.speed;
+  private currentSpeed = 0;
   private position = 0;
   private totalLoopWidth = 0;
 
   ngAfterViewInit(): void {
+    this.currentSpeed = this.getSpeed();
     this.measureTrackWidth();
-    if (this.pauseOnHover) this.setupHoverEvents();
+
+    // 👇 Start in middle so it's already moving
+    this.position = this.totalLoopWidth / 2;
+
+    if (this.config.pauseOnHover !== false) this.setupHoverEvents();
     this.animate();
   }
 
+  private getSpeed(): number {
+    return this.config.speed ?? 60;
+  }
+
+  private getHoverSpeed(): number {
+    return this.config.hoverSpeed ?? 20;
+  }
+
   private measureTrackWidth(): void {
-    // Get half the width because track has 2x logos
     const track = this.trackRef.nativeElement;
     const half = track.scrollWidth / 2;
     this.totalLoopWidth = half;
@@ -119,10 +62,10 @@ export class InfinityScrollComponent implements AfterViewInit {
   private setupHoverEvents(): void {
     const carousel = this.carouselRef.nativeElement;
     carousel.addEventListener('mouseenter', () => {
-      this.currentSpeed = this.slowSpeed;
+      this.currentSpeed = this.getHoverSpeed();
     });
     carousel.addEventListener('mouseleave', () => {
-      this.currentSpeed = this.normalSpeed;
+      this.currentSpeed = this.getSpeed();
     });
   }
 
@@ -131,12 +74,19 @@ export class InfinityScrollComponent implements AfterViewInit {
     const elapsed = (now - this.startTime) / 1000;
     this.startTime = now;
 
-    this.position += this.currentSpeed * elapsed;
-    if (this.position >= this.totalLoopWidth) {
+    const direction = this.config.rtl ? -1 : 1;
+    this.position += direction * this.currentSpeed * elapsed;
+
+    if (!this.config.rtl && this.position >= this.totalLoopWidth) {
       this.position = 0;
     }
+    if (this.config.rtl && this.position <= 0) {
+      this.position = this.totalLoopWidth;
+    }
 
-    this.trackRef.nativeElement.style.transform = `translateX(-${this.position}px)`;
+    this.trackRef.nativeElement.style.transform = `translateX(${
+      this.config.rtl ? '' : '-'
+    }${this.position}px)`;
     requestAnimationFrame(this.animate);
   };
 }
