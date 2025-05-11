@@ -58,7 +58,7 @@ jobs:
 
       - name: Build All Libraries
         run: |
-          npm run build:libs # or replace with: ng build infinity-scroll && ng build scrollama-cards
+          npm run build:libs # or replace with: ng build infinity-scroll && ng build scrollama-cards && ng build flyout-navbar
 
       - name: Publish Infinity Scroll
         working-directory: ./dist/infinity-scroll
@@ -71,3 +71,10 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PACKAGES_HANDLER }}
+
+      - name: Publish flyout Navbar
+        working-directory: ./dist/flyout-navbar
+        run: npm publish --acess public
+
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PACKAGES_HANDLER}}

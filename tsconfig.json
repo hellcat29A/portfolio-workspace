@@ -7,6 +7,9 @@
     "strict": true,
     "noImplicitOverride": true,
     "paths": {
+      "flyout-navbar": [
+        "./dist/flyout-navbar"
+      ],
       "infinity-scroll": [
         "./dist/infinity-scroll"
       ],

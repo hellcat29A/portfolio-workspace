@@ -1,0 +1,61 @@
+<nav>
+  <!-- Border capsule -->
+  <div *ngIf="isSticky" class="border-capsule-container">
+    <div class="border-capsule"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="nav-content">
+    <div
+      [ngClass]="isSticky ? 'logo-shifted' : 'logo-unshifted'"
+      class="logo-container"
+    >
+      <a routerLink="/" class="logo">
+        <img
+          [src]="logoUrl || 'assets/default-logo.webp'"
+          alt="Logo"
+          class="logo"
+        />
+      </a>
+    </div>
+
+    <div
+      [ngClass]="isSticky ? 'nav-shifted' : 'nav-unshifted'"
+      class="nav-items-container"
+    >
+      <div *ngFor="let navItem of navbarItems" class="nav-item">
+        <button [routerLink]="navItem.path" class="nav-btn">
+          {{ navItem.name }}
+        </button>
+      </div>
+
+      <!-- Hamburger -->
+      <button
+        (click)="toggleMenu()"
+        aria-label="Toggle menu"
+        class="hamburger-btn"
+      >
+        <div class="hamburger-icon" [ngClass]="{ 'menu-open': menuOpen }">
+          <span class="hamburger-line line-1"></span>
+          <span class="hamburger-line line-2"></span>
+          <span class="hamburger-line line-3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div
+  [ngClass]="
+    menuOpen ? 'flyout-menu flyout-visible' : 'flyout-menu flyout-hidden'
+  "
+>
+  <button
+    *ngFor="let navItem of navbarItems"
+    [routerLink]="navItem.path"
+    (click)="toggleMenu()"
+    class="flyout-button"
+  >
+    {{ navItem.name }}
+  </button>
+</div>
