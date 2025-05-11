@@ -58,7 +58,7 @@ jobs:
 
       - name: Build All Libraries
         run: |
-          npm run build:libs # or replace with: ng build infinity-scroll && ng build scrollama-cards && ng build flyout-navbar
+          npm run build:libs
 
       - name: Publish Infinity Scroll
         working-directory: ./dist/infinity-scroll

@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:libs": "ng build infinity-scroll && ng build scrollama-cards",
+    "build:libs": "ng build infinity-scroll && ng build scrollama-cards ng build flyout-navbar",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "version": "lerna version --no-push --conventional-commits",
