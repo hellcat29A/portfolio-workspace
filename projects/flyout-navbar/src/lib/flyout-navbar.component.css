@@ -75,6 +75,11 @@ nav {
     display: block;
   }
 }
+@media (max-width: 768px) {
+  .hamburger-icon {
+    display: none;
+  }
+}
 
 .nav-btn {
   font-weight: 500;
