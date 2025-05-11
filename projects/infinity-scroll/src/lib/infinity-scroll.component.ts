@@ -36,13 +36,18 @@ export class InfinityScrollComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.currentSpeed = this.getSpeed();
-    this.measureTrackWidth();
 
-    // 👇 Start in middle so it's already moving
-    this.position = this.totalLoopWidth / 2;
+    // Defer measuring and setting position until DOM is painted
+    requestAnimationFrame(() => {
+      this.measureTrackWidth();
+      this.position = this.totalLoopWidth / 2;
 
-    if (this.config.pauseOnHover !== false) this.setupHoverEvents();
-    this.animate();
+      if (this.config.pauseOnHover !== false) {
+        this.setupHoverEvents();
+      }
+
+      this.animate();
+    });
   }
 
   private getSpeed(): number {
