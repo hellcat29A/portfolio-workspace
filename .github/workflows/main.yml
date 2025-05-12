@@ -78,3 +78,9 @@ jobs:
 
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PACKAGES_HANDLER}}
+
+      - name: Publish Shimmer Text
+        working-directory: ./dist/shimmer-text
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PACKAGES_HANDLER}}

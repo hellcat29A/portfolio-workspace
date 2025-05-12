@@ -15,6 +15,9 @@
       ],
       "scrollama-cards": [
         "./dist/scrollama-cards"
+      ],
+      "shimmer-text": [
+        "./dist/shimmer-text"
       ]
     },
     "noPropertyAccessFromIndexSignature": true,

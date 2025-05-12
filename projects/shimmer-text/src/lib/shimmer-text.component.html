@@ -1,0 +1,12 @@
+<span class="shiny-wrapper">
+  <span class="shiny-base" [ngStyle]="{ color: textColor }">{{ text }}</span>
+  <span
+    class="shiny-effect"
+    [ngStyle]="{
+      '--shimmer-color': shimmerColor,
+      '--shimmer-duration': duration
+    }"
+  >
+    {{ text }}
+  </span>
+</span>

@@ -1,0 +1,56 @@
+.shiny-wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.shiny-base {
+  position: relative;
+  z-index: 1;
+}
+
+.shiny-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: inherit;
+  z-index: 2;
+  pointer-events: none;
+
+  filter: blur(2px);
+
+  /* Shimmer mask animation */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 20%,
+    var(--shimmer-color, rgba(255, 255, 255, 0.2)) 40%,
+    var(--shimmer-color, rgba(255, 255, 255, 0.6)) 50%,
+    var(--shimmer-color, rgba(255, 255, 255, 0.2)) 60%,
+    rgba(255, 255, 255, 0) 80%
+  );
+
+  -webkit-mask-size: 150% auto;
+  -webkit-mask-repeat: no-repeat;
+  animation: shine var(--shimmer-duration, 5s) ease-in-out infinite;
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 30%,
+    var(--shimmer-color, rgba(255, 255, 255, 0.6)) 50%,
+    transparent 70%
+  );
+  mask-size: 150% auto;
+  mask-repeat: no-repeat;
+}
+
+@keyframes shine {
+  0% {
+    -webkit-mask-position: 150% 0;
+    mask-position: 150% 0;
+  }
+  100% {
+    -webkit-mask-position: -150% 0;
+    mask-position: -150% 0;
+  }
+}

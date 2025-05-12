@@ -101,6 +101,39 @@
           }
         }
       }
+    },
+    "shimmer-text": {
+      "projectType": "library",
+      "root": "projects/shimmer-text",
+      "sourceRoot": "projects/shimmer-text/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/shimmer-text/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/shimmer-text/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/shimmer-text/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/shimmer-text/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   }
 }
